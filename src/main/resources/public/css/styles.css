@@ -1,7 +1,59 @@
-/* Stylesheet for the application */
+/* styles.css */
 
+/* General page styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;       /* Light grey background for contrast */
+    color: #1a1a1a;                  /* Deep black-ish text */
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Main container for centering and spacing */
+.container {
+    background-color: #ffffff;       /* White background for content area */
+    border: 1px solid #ccc;          /* Grey border to mirror chart border */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    max-width: 900px;
+    width: 100%;
+}
+
+/* Headings */
 h1 {
-    color: #369;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 3rem;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    border-left: 6px solid #0074D9;  /* Blue accent to reflect bar color */
+    padding-left: 1rem;
+    color: #000;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #003366;                  /* A deeper blue to tie into the theme */
+}
+
+/* Chart image styling */
+img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;          /* Match chart's grey border */
+    background-color: #fff;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Optional: accent bar or card styling for other elements later */
+.card {
+    background-color: #eaf3fb;       /* Soft blue background */
+    border-left: 4px solid #0074D9;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border-radius: 4px;
 }
