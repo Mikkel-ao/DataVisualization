@@ -12,12 +12,13 @@ public class ChartService {
         CategoryChart chart = new CategoryChartBuilder()
                 .width(600)
                 .height(400)
-                .title("Generated from DB")
-                .xAxisTitle("Label")
-                .yAxisTitle("Value")
+                .title("Top Selling Products - This Month")
+                .xAxisTitle("Product Name")
+                .yAxisTitle("Total Sales Value ($)")
                 .build();
 
-        chart.addSeries("Series 1", data.labels, data.values);
-        BitmapEncoder.saveBitmap(chart, "src/main/resources/public/chart", BitmapEncoder.BitmapFormat.PNG);
+        chart.addSeries("Sales Data", data.labels, data.values);
+        BitmapEncoder.saveBitmap(chart, "src/main/resources/public/chart1", BitmapEncoder.BitmapFormat.PNG);
     }
 }
+
