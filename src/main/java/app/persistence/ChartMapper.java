@@ -44,4 +44,30 @@ public class ChartMapper {
             return new ChartData(labels, values);
         }
     }
+
+    public ChartData monthlySalesLastYear() throws SQLException {
+        String sql = """
+        SELECT to_char(s.sale_date, 'YYYY-MM') AS label,
+               SUM(s.total_amount) AS value
+        FROM sales s
+        WHERE s.sale_date >= CURRENT_DATE - INTERVAL '1 year'
+        GROUP BY label
+        ORDER BY label;
+    """;
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            List<String> labels = new ArrayList<>();
+            List<Number> values = new ArrayList<>();
+
+            while (rs.next()) {
+                labels.add(rs.getString("label"));  // Month
+                values.add(rs.getDouble("value"));  // Total amount
+            }
+
+            return new ChartData(labels, values);
+        }
+    }
+
 }

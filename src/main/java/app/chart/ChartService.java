@@ -2,9 +2,14 @@ package app.chart;
 
 import app.entities.ChartData;
 import org.knowm.xchart.*;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ChartService {
     public static void generateBarChart(ChartData data) throws IOException {

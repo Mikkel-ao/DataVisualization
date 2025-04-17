@@ -38,8 +38,10 @@ public class Main {
             try (Connection conn = connectionPool.getConnection()) {
                 ChartMapper repo = new ChartMapper(conn);
                 ChartData data = repo.topSelling();
+                ChartData yearly = repo.monthlySalesLastYear();
                 ChartService.generateBarChart(data);
                 ChartService.generatePieChart(data);
+                ChartService.generateLineChart(yearly);
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
                 ctx.result("Error generating charts. Please try again later.");
