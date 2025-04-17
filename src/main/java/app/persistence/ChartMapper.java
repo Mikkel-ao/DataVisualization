@@ -47,7 +47,7 @@ public class ChartMapper {
 
     public ChartData monthlySalesLastYear() throws SQLException {
         String sql = """
-        SELECT to_char(s.sale_date, 'YYYY-MM') AS label,
+        SELECT date_trunc('month', s.sale_date)::date AS label,
                SUM(s.total_amount) AS value
         FROM sales s
         WHERE s.sale_date >= CURRENT_DATE - INTERVAL '1 year'

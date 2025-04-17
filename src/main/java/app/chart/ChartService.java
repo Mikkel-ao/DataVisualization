@@ -6,10 +6,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class ChartService {
     public static void generateBarChart(ChartData data) throws IOException {
@@ -45,6 +43,39 @@ public class ChartService {
 
         // Save the pie chart as an image
         BitmapEncoder.saveBitmap(chart, "src/main/resources/public/charts/piechart", BitmapEncoder.BitmapFormat.PNG);
+    }
+
+
+    public static void generateLineChart(ChartData data) throws IOException {
+        // Initialize chart with title and axis labels
+        XYChart chart = new XYChartBuilder()
+                .width(600)
+                .height(400)
+                .title("Monthly Sales - Last 12 Months")
+                .xAxisTitle("Month")
+                .yAxisTitle("Total Sales Value ($)")
+                .build();
+
+        // Format: "yyyy-MM"
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        List<Date> xData = new ArrayList<>();
+        List<Number> yData = data.values;
+
+        // Convert labels to Date objects
+        for (String label : data.labels) {
+            try {
+                xData.add(sdf.parse(label));
+            } catch (Exception e) {
+                System.err.println("Invalid date format in label: " + label);
+            }
+        }
+
+        // Add data series to chart
+        chart.addSeries("Monthly Sales", xData, yData)
+                .setMarker(SeriesMarkers.CIRCLE);
+
+        // Save chart as PNG image
+        BitmapEncoder.saveBitmap(chart, "src/main/resources/public/charts/linechart", BitmapEncoder.BitmapFormat.PNG);
     }
 
 }
