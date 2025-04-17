@@ -18,7 +18,7 @@ public class ChartService {
                 .build();
 
         chart.addSeries("Sales Data", data.labels, data.values);
-        BitmapEncoder.saveBitmap(chart, "src/main/resources/public/chart1", BitmapEncoder.BitmapFormat.PNG);
+        BitmapEncoder.saveBitmap(chart, "src/main/resources/public/charts/chart1", BitmapEncoder.BitmapFormat.PNG);
     }
 }
 
