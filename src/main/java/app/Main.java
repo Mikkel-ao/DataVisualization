@@ -14,7 +14,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main {
-
     private static final String USER = "postgres";
     private static final String PASSWORD = "postgres";
     private static final String URL = "jdbc:postgresql://localhost:5432/%s?currentSchema=public";
@@ -23,16 +22,6 @@ public class Main {
     public static void main(String[] args) {
         // Initialize Connection Pool
         ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
-
-        // Fetch data and generate chart
-        try (Connection conn = connectionPool.getConnection()) {
-            ChartMapper repo = new ChartMapper(conn);
-            ChartData data = repo.getChartData();
-            ChartService.generateBarChart(data);
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            return; // Exit if DB/chart generation fails
-        }
 
         // Start Javalin server
         Javalin app = Javalin.create(config -> {
@@ -44,6 +33,21 @@ public class Main {
         }).start(7070);
 
         // Route: render index.html via Thymeleaf
-        app.get("/", ctx -> ctx.render("index.html"));
+        app.get("/", ctx -> {
+            // Fetch data and generate charts dynamically
+            try (Connection conn = connectionPool.getConnection()) {
+                ChartMapper repo = new ChartMapper(conn);
+                ChartData data = repo.getChartData();
+                ChartService.generateBarChart(data);
+                ChartService.generatePieChart(data);
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+                ctx.result("Error generating charts. Please try again later.");
+                return;
+            }
+
+            // Render the index.html page after chart generation
+            ctx.render("index.html");
+        });
     }
 }

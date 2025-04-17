@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<title>Newsletters</title>
+<title>Data Visualization</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
@@ -14,12 +14,13 @@
 
 <div class="chart-section">
     <div class="chart-card">
-        <img th:src="@{/charts/chart1.png}" alt="Chart Image" />
+        <img th:src="@{/charts/barchart.png}" alt="Bar Chart" class="chart-image"/>
     </div>
-    <!-- Add more chart cards as needed -->
+    <div class="chart-card">
+        <img th:src="@{/charts/piechart.png}" alt="Pie Chart" class="chart-image"/>
+    </div>
+    <!-- You can add more chart cards as needed -->
 </div>
+
 </body>
-
-
-
 </html>

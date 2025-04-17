@@ -1,9 +1,8 @@
 package app.chart;
 
 import app.entities.ChartData;
-import org.knowm.xchart.BitmapEncoder;
-import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.*;
+
 
 import java.io.IOException;
 
@@ -18,7 +17,30 @@ public class ChartService {
                 .build();
 
         chart.addSeries("Sales Data", data.labels, data.values);
-        BitmapEncoder.saveBitmap(chart, "src/main/resources/public/charts/chart1", BitmapEncoder.BitmapFormat.PNG);
+        BitmapEncoder.saveBitmap(chart, "src/main/resources/public/charts/barchart", BitmapEncoder.BitmapFormat.PNG);
     }
+
+    public static void generatePieChart(ChartData data) throws IOException {
+        // Create a Pie Chart using PieChartBuilder
+        PieChart chart = new PieChartBuilder()
+                .width(600)
+                .height(400)
+                .title("Product Sales Distribution")
+                .build();
+
+        // Ensure values are of type Number (double or integer) if they're not
+        for (int i = 0; i < data.labels.size(); i++) {
+            try {
+                // Convert string to number and add to chart
+                chart.addSeries(data.labels.get(i), Double.parseDouble(data.values.get(i).toString()));
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid value encountered: " + data.values.get(i));
+            }
+        }
+
+        // Save the pie chart as an image
+        BitmapEncoder.saveBitmap(chart, "src/main/resources/public/charts/piechart", BitmapEncoder.BitmapFormat.PNG);
+    }
+
 }
 
