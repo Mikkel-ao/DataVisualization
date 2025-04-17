@@ -37,7 +37,7 @@ public class Main {
             // Fetch data and generate charts dynamically
             try (Connection conn = connectionPool.getConnection()) {
                 ChartMapper repo = new ChartMapper(conn);
-                ChartData data = repo.getChartData();
+                ChartData data = repo.topSelling();
                 ChartService.generateBarChart(data);
                 ChartService.generatePieChart(data);
             } catch (SQLException | IOException e) {

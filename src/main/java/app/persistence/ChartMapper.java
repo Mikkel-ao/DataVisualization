@@ -15,7 +15,7 @@ public class ChartMapper {
         this.conn = conn;
     }
 
-    public ChartData getChartData() throws SQLException {
+    public ChartData topSelling() throws SQLException {
         // SQL query to fetch top-selling products for the current month
         String sql = """
     SELECT p.name AS label,
@@ -44,6 +44,4 @@ public class ChartMapper {
             return new ChartData(labels, values);
         }
     }
-
-
 }
