@@ -1,13 +1,30 @@
--- First, clear existing sales data
+-- 1. Clear existing data (optional, if you want to reset the tables)
 DELETE FROM sales;
+DELETE FROM products;
+DELETE FROM sales_representatives;
 
--- Now generate realistic sales for the past 12 months
+-- 2. Insert Sample Sales Representatives
+INSERT INTO sales_representatives (name, region, hire_date)
+VALUES
+    ('Alice Johnson', 'North', '2020-01-15'),
+    ('Bob Smith', 'South', '2021-05-20'),
+    ('Charlie Davis', 'East', '2019-10-10');
+
+-- 3. Insert Sample Products
+INSERT INTO products (name, category, price)
+VALUES
+    ('Laptop', 'Electronics', 1000.00),
+    ('Smartphone', 'Electronics', 500.00),
+    ('Tablet', 'Electronics', 300.00),
+    ('Office Chair', 'Furniture', 150.00);
+
+-- 4. Insert Realistic Sales Data for the Past 12 Months
 DO $$
 DECLARE
-start_date DATE := date_trunc('month', CURRENT_DATE) - INTERVAL '11 months';
+start_date DATE := date_trunc('month', CURRENT_DATE) - INTERVAL '11 months';  -- Start 12 months ago
     sale_date DATE;
-    rep_ids INT[] := ARRAY[1, 2, 3];         -- Alice, Bob, Charlie
-    product_ids INT[] := ARRAY[1, 2, 3, 4];  -- Laptop, Smartphone, Tablet, Office Chair
+    rep_ids INT[] := ARRAY[1, 2, 3];         -- Rep IDs (Alice, Bob, Charlie)
+    product_ids INT[] := ARRAY[1, 2, 3, 4];  -- Product IDs (Laptop, Smartphone, Tablet, Office Chair)
     i INT;
     rep_id INT;
     prod_id INT;  -- Renamed loop variable for product
@@ -39,3 +56,8 @@ END LOOP;
 END LOOP;
 END LOOP;
 END $$;
+
+-- Optional: Check if data was inserted properly (for debugging)
+SELECT * FROM sales_representatives;
+SELECT * FROM products;
+SELECT * FROM sales LIMIT 10;

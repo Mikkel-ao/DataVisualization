@@ -32,6 +32,7 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
         }).start(7070);
 
+
         // Route: render index.html via Thymeleaf
         app.get("/", ctx -> {
             // Fetch data and generate charts dynamically
