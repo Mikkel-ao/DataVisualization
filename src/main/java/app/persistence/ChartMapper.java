@@ -16,34 +16,38 @@ public class ChartMapper {
     }
 
     public ChartData topSelling() throws SQLException {
-        // SQL query to fetch top-selling products for the current month
         String sql = """
-    SELECT p.name AS label,
-           SUM(s.total_amount) AS value
-    FROM sales s
-    JOIN products p ON s.product_id = p.product_id
-    WHERE date_trunc('month', s.sale_date) = date_trunc('month', CURRENT_DATE)
-    GROUP BY p.name
-    ORDER BY value DESC;
+        SELECT p.name AS label,
+               SUM(s.total_amount) AS value
+        FROM sales s
+        JOIN products p ON s.product_id = p.product_id
+        WHERE s.sale_date >= date_trunc('month', CURRENT_DATE)
+          AND s.sale_date < date_trunc('month', CURRENT_DATE) + INTERVAL '1 month'
+        GROUP BY p.name
+        ORDER BY value DESC
+        LIMIT 5;
     """;
 
-        // Execute SQL query and collect data
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             List<String> labels = new ArrayList<>();
             List<Number> values = new ArrayList<>();
 
-            // Collect the results of the query
             while (rs.next()) {
-                labels.add(rs.getString("label"));  // Product name (label)
-                values.add(rs.getDouble("value"));  // Total sales value (value)
+                labels.add(rs.getString("label"));
+                values.add(rs.getDouble("value"));
             }
 
-            // Return the chart data (labels and values)
+            if (labels.isEmpty()) {
+                labels.add("No Sales");
+                values.add(0);
+            }
+
             return new ChartData(labels, values);
         }
     }
+
 
     public ChartData monthlySalesLastYear() throws SQLException {
         String sql = """
